@@ -1,0 +1,4 @@
+rootProject.name = 'SocketLib'
+
+
+enableFeaturePreview('GRADLE_METADATA')
