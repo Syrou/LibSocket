@@ -2,6 +2,8 @@ package sample
 
 actual class LibSocket actual constructor():Base() {
     actual fun connect(address:String, port:Int) {
+        //val client = net.Socket()
+
     }
 
     actual fun disconnect() {
