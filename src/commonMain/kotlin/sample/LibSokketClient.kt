@@ -1,6 +1,6 @@
 package sample
 
-expect class LibSocket() : Base {
+expect class LibSokketClient() : Base {
     fun connect(address: String, port: Int)
     fun disconnect()
     fun send(text:String)

@@ -1,21 +1,13 @@
 package sample
 
 import kotlinx.cinterop.*
+import platform.linux.inet_pton
 import platform.posix.*
-import platform.windows.*
-import platform.windows.AF_INET
-import platform.windows.IPPROTO_TCP
-import platform.windows.SOCK_STREAM
-import platform.windows.connect
-import platform.windows.socket
 
-actual class LibSocket actual constructor() : Base() {
-    var sock: SOCKET = 0U
+actual class LibSokketClient actual constructor() : Base() {
+    var sock = 0
     actual fun connect(address:String, port:Int) {
         memScoped {
-            val wsaData: WSAData = alloc<WSADATA>()
-            val word = 0x202
-            platform.windows.WSAStartup(word.toUShort(), wsaData.ptr.reinterpret())
             sock = socket(AF_INET, SOCK_STREAM, 0)
             if(sock.toInt() < 0){
                 perror("socket failed: ${sock.toInt()}\n")
@@ -36,8 +28,7 @@ actual class LibSocket actual constructor() : Base() {
             }
             val result = connect(sock, sockAddress.ptr.reinterpret(), sockaddr_in.size.convert())
             if(result < 0){
-                platform.windows.closesocket(sock)
-                platform.windows.WSACleanup()
+                platform.posix.close(sock)
             }else{
                 println("We connected!")
                 connected=true
@@ -46,13 +37,13 @@ actual class LibSocket actual constructor() : Base() {
     }
 
     actual fun disconnect() {
-        platform.windows.closesocket(sock)
-        platform.windows.WSACleanup()
+        platform.posix.close(sock)
     }
 
     actual fun send(text:String) {
         if(connected) {
-            platform.windows.send(sock, text, text.length, 0)
+            val byteArray =  text.encodeToByteArray()
+            platform.posix.send(sock, byteArray.refTo(0), byteArray.size.convert(), 0)
             println("We should have sent something?")
         }else{
             println("We can not send when we are not connected")

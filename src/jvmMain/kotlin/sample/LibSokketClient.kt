@@ -5,7 +5,7 @@ import java.io.DataOutputStream
 import java.lang.Exception
 
 
-actual class LibSocket actual constructor():Base() {
+actual class LibSokketClient actual constructor():Base() {
     var socket:Socket? = null
     var mAddress:String? = null
     var mPort:Int = 0
@@ -32,10 +32,6 @@ actual class LibSocket actual constructor():Base() {
 
     actual fun recv() {
         while(connected) {
-            val checkSocketedConnected = mAddress?.let { Util.isSocketAliveUitlitybyCrunchify(it, mPort) } ?: false
-            if(!checkSocketedConnected){
-                return
-            }
             socket?.let {
                 try {
                     val inputStream = it.getInputStream()

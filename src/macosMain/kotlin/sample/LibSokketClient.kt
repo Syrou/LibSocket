@@ -1,10 +1,9 @@
 package sample
 
 import kotlinx.cinterop.*
-import platform.linux.inet_pton
 import platform.posix.*
 
-actual class LibSocket actual constructor() : Base() {
+actual class LibSokketClient actual constructor() : Base() {
     var sock = 0
     actual fun connect(address:String, port:Int) {
         memScoped {
