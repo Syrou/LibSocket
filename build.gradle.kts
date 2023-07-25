@@ -69,13 +69,13 @@ kotlin {
 
 publishing {
     repositories {
-        /*maven {
+        maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/Syrou/console-lifecycle-scope")
+            url = uri("https://maven.pkg.github.com/Syrou/Sokket")
             credentials {
                 username = (props.getProperty("gpr.user") ?: System.getenv("USERNAME")).toString()
                 password = (props.getProperty("gpr.key") ?: System.getenv("TOKEN")).toString()
             }
-        }*/
+        }
     }
 }
